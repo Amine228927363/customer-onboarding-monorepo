@@ -1,7 +1,7 @@
 import Fastify, { FastifyInstance, RouteShorthandOptions } from 'fastify';
 import userRoutes from './models/user/user.routes';
 import { userSchemas } from './models/user/user.schema';
-
+import fastifyCors from '@fastify/cors';
 const fastify= Fastify();
 
 fastify.get('/', async () => {
@@ -9,6 +9,7 @@ fastify.get('/', async () => {
 });
 
 async function main() {
+  fastify.register(fastifyCors);
   for (const schema of userSchemas) {
     fastify.addSchema(schema);
   }
