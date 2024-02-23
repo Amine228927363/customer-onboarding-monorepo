@@ -2,6 +2,7 @@ import Fastify, { FastifyInstance, RouteShorthandOptions } from 'fastify';
 import userRoutes from './models/user/user.routes';
 import { userSchemas } from './models/user/user.schema';
 import fastifyCors from '@fastify/cors';
+import custRoutes from './models/customers/customer.routes';
 const fastify= Fastify();
 
 fastify.get('/', async () => {
@@ -15,6 +16,7 @@ async function main() {
   }
 
   fastify.register(userRoutes);
+  fastify.register(custRoutes);
 }
   const start = async () => {
     try {

@@ -1,11 +1,11 @@
-import { buildJsonSchemas } from 'fastify-zod';
-import { z } from 'zod';
+import { buildJsonSchemas } from "fastify-zod";
+import { z } from "zod";
 
 const userCore = {
   email: z
     .string({
-      required_error: 'Email is required',
-      invalid_type_error: 'Invalid email',
+      required_error: "Email is required",
+      invalid_type_error: "Invalid email",
     })
     .email(),
   username: z.string(),
@@ -16,8 +16,8 @@ const createUserSchema = z.object({
   ...userCore,
   password: z
     .string({
-      required_error: 'Password is required',
-      invalid_type_error: 'Invalid password',
+      required_error: "Password is required",
+      invalid_type_error: "Invalid password",
     })
     .min(8)
     .max(1024),
@@ -31,34 +31,35 @@ const getUserSchema = z.object({
   ...userCore,
 });
 
-const getAllUsersSchema = z.array(
-    getUserSchema
-);
+const getAllUsersSchema = z.array(getUserSchema);
 
 const updateUserSchema = z.object({
   ...userCore,
   email: userCore.email.optional(),
   username: userCore.username.optional(),
-  password: z.string({
-    required_error: 'Password must be a string',
-    invalid_type_error: 'Password must be a string',
-  }).optional(),
+  password: z
+    .string({
+      required_error: "Password must be a string",
+      invalid_type_error: "Password must be a string",
+    })
+    .optional(),
 });
 
 export const updatedUserResponseSchema = z.object({
-  ...userCore
+  ...userCore,
 });
 export const loginSchema = z.object({
   email: z
     .string({
-      required_error: 'Email is required',
-      invalid_type_error: 'Invalid email',
+      required_error: "Email is required",
+      invalid_type_error: "Invalid email",
     })
     .email(),
-    password:z.string(),});
-  export const loginUserResponseSchema = z.object({
-    token: z.string()
-  });
+  password: z.string(),
+});
+export const loginUserResponseSchema = z.object({
+  token: z.string(),
+});
 
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 export type LoginUserInput = z.infer<typeof loginSchema>;
